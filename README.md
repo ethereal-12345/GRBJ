@@ -48,4 +48,63 @@ eg：def outer(func):
 def hello():
     print("hello")
 
+  ## 异步编程
+  1.  async / await ：语法，用来写异步函数
+  
+2.  asyncio ：官方库，提供事件循环、任务并发、信号量等调度能力
+
+事件循环 event loop：异步的调度中心，负责安排协程什么时候运行
+
+-  asyncio.run() ：python3.7+最常用，自动创建并关闭事件循环
+
+ 协程coroutine： async def  定义出来的东西
+
+3Task任务：把协程包装成可调度任务，丢进事件循环并发执行
+
+-  asyncio.create_task()  创建任务
+
+-  asyncio.gather(*tasks)  ✅【高频】批量并发执行多个协程，收集所有返回结果
+
+eg：import asyncio
+
+async def demo():
+
+    print("start")
     
+    await asyncio.sleep(1) # 异步休眠，不会阻塞事件循环
+    
+    print("end")
+
+asyncio.run(demo())
+
+3. aiohttp ：第三方库，基于asyncio实现异步http请求
+
+尽量复用  aiohttp.ClientSession() ，不要每次请求新建session，性能差
+
+ session.get / session.post 前面必须加 await
+
+ 记得关闭session，推荐 async with 上下文管理器自动释放资源
+
+eg：import asyncio
+
+import aiohttp
+
+async def fetch(session):
+
+    url = "https://xxx"
+    
+    async with session.get(url) as resp:
+    
+        return await resp.text()
+
+async def main():
+
+    async with aiohttp.ClientSession() as session:
+    
+        res = await fetch(session)
+        
+        print(res)
+
+asyncio.run(main())
+
+## Pydantic类型验证与数握建備

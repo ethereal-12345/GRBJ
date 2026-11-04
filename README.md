@@ -108,3 +108,74 @@ async def main():
 asyncio.run(main())
 
 ## Pydantic类型验证与数握建備
+### 核心可以做什么
+1. 类型校验：传进来的数据不对直接抛异常，不用自己手写一堆if判断
+
+2. 自动类型转换：能转就帮你转，比如字符串"123" → int 123（符合规则前提下）
+
+3. 数据建模：定义字段、默认值、字段限制（长度、大小、正则）
+
+4. 导出字典/JSON：model_dump() 非常方便，对接大模型API、FastAPI必备
+
+#### 基础写法
+from pydantic import BaseModel
+
+class User(BaseModel):
+
+    id: int
+    
+    name: str
+    
+    age: int | None = None # 可选字段，不传有默认值
+
+    ### 常用校验器
+    Field：设置字段约束，最大最小、长度、描述，生成json schema（function calling非常依赖schema）
+    eg：from pydantic import Field
+    
+name: str = Field(min_length=1, 
+max_length=50, description="用户姓名")
+
+## 环境管理（Conda/Poetry)
+### Conda可以做什么
+1. 创建隔离虚拟环境，不同项目Python版本随便切
+
+2. 不光能装Python包，还能装C/C++、CUDA等非Python依赖（深度学习非常好用）
+
+3. 解决有些包pip装不上、编译麻烦的痛点
+
+#### 创建环境
+conda create -n myenv python=3.11
+#### 激活环境
+conda activate myenv
+#### 安装包
+conda install xxx
+#### 导出环境配置
+conda env export > environment.yml
+#### 根据yml还原环境
+conda env create -f environment.yml
+
+### Poetry可以做什么
+1. 虚拟环境管理 + 精准锁定依赖版本，生成 pyproject.toml  +  poetry.lock 
+
+2. 统一管理依赖、项目元信息，一键打包、发布Python库
+
+3. 解决经典痛点： requirements.txt  版本混乱、分不清直接依赖和间接依赖
+
+#### 初始化项目，生成pyproject.toml
+poetry init
+#### 创建虚拟环境并进入
+poetry shell
+#### 添加依赖（自动更新lock文件）
+poetry add xxx
+#### 安装全部依赖（从lock文件，保证团队环境一致）
+poetry install
+#### 导出成requirements.txt（兼容老项目）
+poetry export -f requirements.txt --output requirements.txt
+
+### Conda和 Poetry如何选择
+1.选 Conda：深度学习、需要CUDA、底层非python库、想随意切换Python大版本
+
+2. 选 Poetry：业务后端、LLM应用开发、写SDK包、多人协作，追求依赖可复现
+
+# Web Apl开发
+## FastAPI框架（路由/依赖注入/中间件)

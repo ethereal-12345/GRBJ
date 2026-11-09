@@ -294,3 +294,20 @@ CRITICAL：严重错误，程序快挂了
 Dockerfile 就是一份打包说明书，写清楚需要什么环境、拷什么文件、装哪些依赖；执行构建命令之后，就能生成镜像。
 镜像 = 打好包的软件模板；容器 = 镜像跑起来之后运行中的程序
 
+## Docker Compose多容器编排
+Dockerfile搞定一个容器，Docker Compose搞定一堆互相配合的容器
+
+### Docker Compose常用命令
+#### 后台启动全部服务（开发最常用）
+docker-compose up -d
+#### 实时看日志
+docker-compose logs -f
+#### 查看当前编排下的容器状态
+docker-compose ps
+#### 停止容器，保留容器
+docker-compose stop
+#### 停止并删除容器（卷默认保留，加 -v 才会删掉数据卷）
+docker-compose down
+#### 修改yml之后重新构建启动
+docker-compose up -d --build
+

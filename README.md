@@ -332,5 +332,13 @@ Transformer就是现在所有大模型的核心骨架，靠自注意力机制，
 模型一次性最多能看见的token总量
 
 ### 自注意力
-通俗的类比
+大模型自带的找关联，分轻重
 
+## 主流模型对比（GPT/Claude/Gemini/DeepSeek/Qwen)
+GPT:综合全能型选手，生态最成熟
+Claude：长文档专家，幻觉控制做得很好
+Gemini ：多模态特长生，图片、音频、视频解析是强项
+DeepSeek：推理、代码很强，性价比高
+Qwen：国产全能工具箱，开源生态完善，中文友好
+
+## 大模型API调用(OpenAl/DeepSeek 结构化输出)
